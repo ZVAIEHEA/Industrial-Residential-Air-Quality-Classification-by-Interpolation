@@ -1,4 +1,4 @@
-from pandas import pd
+import pandas as pd
 
 
 df = pd.read_csv('City_Types.csv')
