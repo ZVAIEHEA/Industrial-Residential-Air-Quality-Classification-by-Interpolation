@@ -1,62 +1,42 @@
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.datasets import fetch_openml
 
-from sklearn.svm import SVC
-from sklearn.metrics import zero_one_loss
-from time import time
-import numpy as np
+# Fetch the dataset
+try:
+    housing = fetch_openml(name="house-prices-2", as_frame=True)
+    df = housing.frame
+except Exception as e:
+    print(f"Error fetching dataset: {e}")
+    exit()
 
-results = []
+# Data Cleaning and Preparation
+if df is not None:
+    # Fill missing values (replace with median for numerical columns)
+    for col in df.columns:
+        if df[col].dtype in ['int64', 'float64']:
+            df[col] = df[col].fillna(df[col].median())
+        else:
+            # For simplicity, fill categorical with mode.  Consider more sophisticated handling in real application.
+            df[col] = df[col].fillna(df[col].mode()[0])
 
-X_train = np.random.rand(100, 10)
-y_train = np.random.randint(0, 2, 100)
-X_val = np.random.rand(20, 10)
-y_val = np.random.randint(0, 2, 20)
+    # Feature Engineering: Price per square meter (assuming 'SalePrice' is total price and 'GrLivArea' is living area in sq ft)
+    df['PricePerSqM'] = df['SalePrice'] / (df['GrLivArea'] * 0.092903) # Convert sq ft to sq meters
 
-# Exemple pour H3 = SVM polynôme degré 3
-degree = 3
-C_list = [0.1, 1, 10]
-gamma_list = ['scale', 'auto']
-coef0_list = [0, 1]
+    # Chicago neighborhood data might not be directly available.  Using 'Neighborhood' feature as a proxy.
+    # Real world:  Would require mapping 'Neighborhood' or lat/lon to Chicago neighborhood definitions.
 
-print("Démarrage de l'algorithme Complexity-Cost...")
-print(f"Nombre de combinaisons à tester : {len(C_list) * len(gamma_list) * len(coef0_list)}")
+    # Group by neighborhood and calculate the median price per square meter
+    neighborhood_prices = df.groupby('Neighborhood')['PricePerSqM'].median().sort_values()
 
-for C in C_list:
-    for gamma in gamma_list:
-        for coef0 in coef0_list:
-            
-            # 1. Instancier le modèle
-            model = SVC(kernel='poly', degree=degree, C=C, gamma=gamma, coef0=coef0)
-            
-            # 2. Mesurer le temps d'entraînement
-            start = time()
-            model.fit(X_train, y_train)
-            train_time = time() - start
-            
-            # 3. Évaluer l'erreur de validation (f1)
-            y_pred = model.predict(X_val)
-            error_val = zero_one_loss(y_val, y_pred)
-            
-            # 4. Estimer la complexité (f2) — ici d^p
-            d = X_train.shape[1]
-            complexity = d ** degree
-            
-            # 5. Estimer le coût (f3) — ici temps d'entraînement
-            cost = train_time
-            
-            # 6. Sauvegarder le triplet
-            results.append({
-                'model': model,
-                'params': {'C': C, 'gamma': gamma, 'coef0': coef0},
-                'f1_error': error_val,
-                'f2_complexity': complexity,
-                'f3_cost': cost
-            })
-            
-            print(f"C={C}, gamma={gamma}, coef0={coef0} -> Error: {error_val:.4f}, Cost: {cost:.4f}s")
-
-print(f"\nAlgorithme terminé ! {len(results)} modèles testés.")
-print("\nMeilleur modèle (erreur la plus faible):")
-best_model = min(results, key=lambda x: x['f1_error'])
-print(f"Paramètres: {best_model['params']}")
-print(f"Erreur: {best_model['f1_error']:.4f}")
-print(f"Coût: {best_model['f3_cost']:.4f}s")
+    # Plotting
+    plt.figure(figsize=(12, 8))  # Adjust figure size for better readability
+    neighborhood_prices.plot(kind='bar')
+    plt.title('Median House Price per Square Meter in Chicago (by Neighborhood Proxy)')
+    plt.xlabel('Neighborhood')
+    plt.ylabel('Median Price per Square Meter')
+    plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for readability
+    plt.tight_layout()  # Adjust layout to prevent labels from overlapping
+    plt.show()
+else:
+    print("Failed to load the dataset. Cannot create the plot.")
