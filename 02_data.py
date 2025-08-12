@@ -25,6 +25,12 @@ def get_data(dataset):
 
 def draw_data(dataset_Zurich_sample, dataset_Beijing_sample, zurich_coefficients, beijing_coefficients):
   
+  # Debug: Print the actual data values
+  print("Zurich CO values:", dataset_Zurich_sample['CO'].values)
+  print("Zurich PM10 values:", dataset_Zurich_sample['PM10'].values)
+  print("Beijing CO values:", dataset_Beijing_sample['CO'].values)
+  print("Beijing PM10 values:", dataset_Beijing_sample['PM10'].values)
+  
   # Plot the data points   
   plt.figure(figsize=(8, 6))
   plt.scatter(dataset_Zurich_sample['CO'], dataset_Zurich_sample['PM10'], marker='o', color='blue', label='Zurich')
@@ -33,13 +39,13 @@ def draw_data(dataset_Zurich_sample, dataset_Beijing_sample, zurich_coefficients
   plt.ylabel('PM10')
   plt.title('CO vs PM10 for Zurich and Beijing (Industrial)')
   
-  # Plot the interpolated functions
-  x = np.linspace(1000,10000,1,2*dataset_Beijing_sample['CO'].max())
-  plt.plot(x, np.polyval(zurich_coefficients, x), color='blue', linestyle='--', label='Zurich Interpolation')
-  plt.plot(x, np.polyval(beijing_coefficients, x), color='red', linestyle='--', label='Beijing Interpolation')
+  # Plot the interpolated functions - Fix the np.linspace syntax
+  min_co = min(dataset_Zurich_sample['CO'].min(), dataset_Beijing_sample['CO'].min())
+  max_co = max(dataset_Zurich_sample['CO'].max(), dataset_Beijing_sample['CO'].max())
+  x = np.linspace(min_co, max_co, 100)
+  plt.plot(x, np.polyval(zurich_coefficients[::-1], x), color='blue', linestyle='--', label='Zurich Interpolation')
+  plt.plot(x, np.polyval(beijing_coefficients[::-1], x), color='red', linestyle='--', label='Beijing Interpolation')
   
-
-
   plt.legend()
   plt.grid(True)
   plt.show()
