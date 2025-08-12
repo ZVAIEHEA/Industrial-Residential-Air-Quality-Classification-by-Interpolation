@@ -1,4 +1,6 @@
 import pandas as pd
+import matplotlib
+matplotlib.use('TkAgg')  # Force TkAgg backend for VNC
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -46,6 +48,15 @@ def draw_data(dataset_Zurich_sample, dataset_Beijing_sample, zurich_coefficients
   plt.plot(x, np.polyval(zurich_coefficients[::-1], x), color='blue', linestyle='--', label='Zurich Interpolation')
   plt.plot(x, np.polyval(beijing_coefficients[::-1], x), color='red', linestyle='--', label='Beijing Interpolation')
   
+  # Set explicit axis limits
+  plt.xlim(min_co - 50, max_co + 50)
+  all_pm10 = np.concatenate([dataset_Zurich_sample['PM10'].values, dataset_Beijing_sample['PM10'].values])
+  plt.ylim(all_pm10.min() - 10, all_pm10.max() + 10)
+  
   plt.legend()
   plt.grid(True)
+  plt.tight_layout()
+  plt.draw()
+  plt.pause(0.1)  # Force display refresh
   plt.show()
+  input("Appuyez sur Entrée pour continuer...")  # Keep window open
