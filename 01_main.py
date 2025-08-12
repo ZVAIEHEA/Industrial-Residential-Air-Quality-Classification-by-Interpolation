@@ -27,8 +27,8 @@ if __name__ == "__main__" :
   print("Beijing Coefficients:", beijing_coefficients)
 
   # Draw the interpolation
-  draw_interpolation(zurich_coefficients)
-  draw_interpolation(beijing_coefficients)
+  draw_interpolation(zurich_coefficients, dataset_Zurich_sample, "Zurich")
+  draw_interpolation(beijing_coefficients, dataset_Beijing_sample, "Beijing")
 
   # In last part so the code can run
   draw_data(dataset_Zurich_sample, dataset_Beijing_sample)
