@@ -10,7 +10,6 @@ functions_module = importlib.import_module('03_functions')
 get_data = data_module.get_data
 draw_data = data_module.draw_data
 interpolate_vandermonde = functions_module.interpolate_vandermonde
-draw_interpolation = functions_module.draw_interpolation
 
 if __name__ == "__main__" :
   # Load the dataset
@@ -26,11 +25,7 @@ if __name__ == "__main__" :
   print("Zurich Coefficients:", zurich_coefficients)
   print("Beijing Coefficients:", beijing_coefficients)
 
-  # Draw the interpolation
-  draw_interpolation(zurich_coefficients, dataset_Zurich_sample, "Zurich")
-  draw_interpolation(beijing_coefficients, dataset_Beijing_sample, "Beijing")
-
   # In last part so the code can run
-  draw_data(dataset_Zurich_sample, dataset_Beijing_sample)
+  draw_data(dataset_Zurich_sample, dataset_Beijing_sample, zurich_coefficients, beijing_coefficients)
 
 
