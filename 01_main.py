@@ -1,6 +1,14 @@
-from importlib import reload
+import importlib
 import pandas as pd
 
+# Import modules using importlib
+data_module = importlib.import_module('02_data')
+functions_module = importlib.import_module('03_functions')
+
+# Extract functions from modules
+get_data = data_module.get_data
+draw_data = data_module.draw_data
+interpolate_vandermonde = functions_module.interpolate_vandermonde
 
 if __name__ == "__main__" :
   # Load the dataset
