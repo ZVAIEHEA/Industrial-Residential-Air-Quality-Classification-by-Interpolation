@@ -12,3 +12,6 @@ def interpolate_vandermonde(dataset) :
     return coefficients_list
 
 
+def draw_interpolation(coefficients_list):
+  # Implement the drawing of the interpolation
+  
