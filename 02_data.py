@@ -31,6 +31,4 @@ def draw_data(dataset_Zurich_sample, dataset_Beijing_sample) :
   plt.title('CO vs PM10 for Zurich and Beijing (Industrial)')
   plt.legend()
   plt.grid(True)
-  plt.savefig('plot.png', dpi=150, bbox_inches='tight')
-  plt.close()
-  print("Plot saved as 'plot.png'")
+  plt.show()
