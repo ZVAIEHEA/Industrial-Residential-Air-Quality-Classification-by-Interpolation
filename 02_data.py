@@ -34,7 +34,7 @@ def draw_data(dataset_Zurich_sample, dataset_Beijing_sample, zurich_coefficients
   plt.title('CO vs PM10 for Zurich and Beijing (Industrial)')
   
   # Plot the interpolated functions
-  x = np.linspace(1000,10000,)
+  x = np.linspace(1000,10000,1,2*dataset_Beijing_sample['CO'].max())
   plt.plot(x, np.polyval(zurich_coefficients, x), color='blue', linestyle='--', label='Zurich Interpolation')
   plt.plot(x, np.polyval(beijing_coefficients, x), color='red', linestyle='--', label='Beijing Interpolation')
   
