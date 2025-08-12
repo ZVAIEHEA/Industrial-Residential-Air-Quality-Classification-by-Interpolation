@@ -11,3 +11,17 @@ def interpolate_vandermonde(dataset) :
     coefficients = np.linalg.solve(A, y)
     return coefficients
 
+
+def classification_function(beijing_coefficients, zurich_coefficients):
+    # Create the coefficients of the classification function
+    a = float(0.5)
+    b = float(0.5)
+    c = float(2)
+    beijing_coefficients = beijing_coefficients
+    zurich_coefficients = zurich_coefficients
+    classification_coefficients = []
+    for i in range(len(beijing_coefficients)):
+
+        classification_coefficients.append((a * beijing_coefficients[i] - b * zurich_coefficients[i]) / c)
+    print(classification_coefficients)
+        
