@@ -1,7 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-
 def get_data(dataset):
 
 
@@ -12,11 +11,16 @@ def get_data(dataset):
 
   #print(dataset_Beijing)
 
-  
+
   dataset_Zurich_sample = dataset_Zurich.sample(n=6)[['CO','PM10']]
   dataset_Beijing_sample = dataset_Beijing.sample(n=6)[['CO','PM10']]
 
+  #print(dataset_Zurich_sample)
+  #print(dataset_Beijing_sample)
+
+
   return dataset_Zurich_sample, dataset_Beijing_sample
+
 
 def draw_data(dataset_Zurich_sample, dataset_Beijing_sample) :
   plt.figure(figsize=(8, 6))
@@ -28,16 +32,3 @@ def draw_data(dataset_Zurich_sample, dataset_Beijing_sample) :
   plt.legend()
   plt.grid(True)
   plt.show()
-
-def interpolate_vandermonde(dataset_Zurich_sample, dataset_Beijing_sample) :
-  a=1
-  return a
-
-
-if __name__ == "__main__" :
-  print("Hello World")
-  dataset = pd.read_csv('City_Types.csv')
-  print(dataset.columns.values.tolist())
-  dataset_Zurich_sample, dataset_Beijing_sample = get_data(dataset)
-  draw_data(dataset_Zurich_sample, dataset_Beijing_sample)
-  
