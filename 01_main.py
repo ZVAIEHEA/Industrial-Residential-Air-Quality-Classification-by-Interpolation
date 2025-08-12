@@ -1,5 +1,4 @@
-from 02_data import get_data, draw_data
-from 03_functions import interpolate_vandermonde
+from importlib import reload
 import pandas as pd
 
 
