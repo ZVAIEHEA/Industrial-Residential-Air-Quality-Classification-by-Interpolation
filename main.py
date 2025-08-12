@@ -9,6 +9,7 @@ def get_data(dataset):
   dataset_Zurich = dataset[dataset['City'].isin(['Zurich'])]
   dataset_Beijing = dataset[dataset['Type'].isin(['Industrial'])]
   dataset_Beijing = dataset[dataset['City'].isin(['Beijing'])]
+
   #print(dataset_Beijing)
 
   
@@ -34,6 +35,7 @@ def interpolate_vandermonde(dataset_Zurich_sample, dataset_Beijing_sample) :
 
 
 if __name__ == "__main__" :
+  print("Hello World")
   dataset = pd.read_csv('City_Types.csv')
   print(dataset.columns.values.tolist())
   dataset_Zurich_sample, dataset_Beijing_sample = get_data(dataset)
