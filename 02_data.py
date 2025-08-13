@@ -25,7 +25,7 @@ def get_data(dataset):
   return dataset_Zurich_sample, dataset_Beijing_sample
 
 
-def draw_data(dataset_Zurich_sample, dataset_Beijing_sample, zurich_coefficients, beijing_coefficients):
+def draw_data(dataset_Zurich_sample, dataset_Beijing_sample, zurich_coefficients, beijing_coefficients, classification_coefficients):
   
   # Debug: Print the actual data values
   print("Zurich CO values:", dataset_Zurich_sample['CO'].values)
@@ -47,6 +47,7 @@ def draw_data(dataset_Zurich_sample, dataset_Beijing_sample, zurich_coefficients
   x = np.linspace(min_co, max_co, 100)
   plt.plot(x, np.polyval(zurich_coefficients[::-1], x), color='blue', linestyle='--', label='Zurich Interpolation')
   plt.plot(x, np.polyval(beijing_coefficients[::-1], x), color='red', linestyle='--', label='Beijing Interpolation')
+  plt.plot(x, np.polyval(classification_coefficients[::-1], x), color='green', linestyle='--', label='Classification Function')
   
   # Set explicit axis limits
   plt.xlim(min_co - 50, max_co + 50)

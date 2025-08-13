@@ -19,9 +19,17 @@ def classification_function(beijing_coefficients, zurich_coefficients):
     c = float(2)
     beijing_coefficients = beijing_coefficients
     zurich_coefficients = zurich_coefficients
-    classification_coefficients = []
+    raw_classification_coefficients = []
     for i in range(len(beijing_coefficients)):
 
-        classification_coefficients.append((a * beijing_coefficients[i] - b * zurich_coefficients[i]) / c)
+        raw_classification_coefficients.append((a * beijing_coefficients[i] - b * zurich_coefficients[i]) / c)
+    
+    classification_coefficients = [float(value) for value in raw_classification_coefficients]
+    
+    print("Classification Coefficients:")
+
+    
     print(classification_coefficients)
-        
+    print("33344")
+
+    return classification_coefficients

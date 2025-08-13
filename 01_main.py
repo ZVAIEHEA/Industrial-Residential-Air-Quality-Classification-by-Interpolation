@@ -27,10 +27,10 @@ if __name__ == "__main__" :
   print("Beijing Coefficients:", beijing_coefficients)
 
   # Classification function
-  classification_function(beijing_coefficients, zurich_coefficients)
+  classification_coefficients= classification_function(beijing_coefficients, zurich_coefficients)
   
   # In last part so the code can run
-  draw_data(dataset_Zurich_sample, dataset_Beijing_sample, zurich_coefficients, beijing_coefficients)
+  draw_data(dataset_Zurich_sample, dataset_Beijing_sample, zurich_coefficients, beijing_coefficients, classification_coefficients)
   
 
 
