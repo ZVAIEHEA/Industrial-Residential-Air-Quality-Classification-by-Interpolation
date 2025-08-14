@@ -12,24 +12,18 @@ def interpolate_vandermonde(dataset) :
     return coefficients
 
 
-def classification_function(beijing_coefficients, zurich_coefficients):
-    # Create the coefficients of the classification function
-    a = float(0.5)
-    b = float(0.5)
-    c = float(2)
-    beijing_coefficients = beijing_coefficients
-    zurich_coefficients = zurich_coefficients
-    raw_classification_coefficients = []
-    for i in range(len(beijing_coefficients)):
+def regression_function(dataset_Zurich_sample, zurich_coefficients):
+    # Create the coefficients of the polynomial function
+    polynomial_coefficients = zurich_coefficients
 
-        raw_classification_coefficients.append((a * beijing_coefficients[i] - b * zurich_coefficients[i]) / c)
-    
-    classification_coefficients = [float(value) for value in raw_classification_coefficients]
-    
-    print("Classification Coefficients:")
+    # Define the boundaries for the regression function
+    min_co = dataset_Zurich_sample['CO'].min()
+    max_co = dataset_Zurich_sample['CO'].max()
+    min_co = int(min_co)
+    max_co = int(max_co)
 
-    
-    print(classification_coefficients)
-    print("33344")
+    # Create the regression function
 
-    return classification_coefficients
+    for x in range(min_co, max_co):
+        polynomial_function = np.polyval(polynomial_coefficients[::-1], x)
+        
